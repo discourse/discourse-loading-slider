@@ -33,7 +33,15 @@ export default apiInitializer("0.8", (api) => {
     // component. This change should probably be made in core, but keeping it here for now.
     @observes("posts")
     _postsChanged() {
-      this.queueRerender();
+      this._refresh();
+    },
+
+    // When refresh is called, the posts on screen might be different, and they might even belong
+    // to a different topic. Therefore we need to trigger _scrollTriggered to make sure the screen-track
+    // service is updated about the change.
+    _refresh(args) {
+      this._super(args);
+      this._scrollTriggered();
     },
   });
 
