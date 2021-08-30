@@ -1,7 +1,7 @@
 import Component from "@ember/component";
 import { inject as service } from "@ember/service";
 import { equal } from "@ember/object/computed";
-import { next } from "@ember/runloop";
+import { cancel, next } from "@ember/runloop";
 import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
@@ -18,11 +18,16 @@ export default Component.extend({
   done: equal("state", "done"),
 
   stateChanged(loading) {
+    if (this._deferredStateChange) {
+      cancel(this._deferredStateChange);
+      this._deferredStateChange = null;
+    }
+
     if (loading && this.ready) {
       this.set("state", "loading");
     } else if (loading) {
       this.set("state", "ready");
-      next(() => this.set("state", "loading"));
+      this._deferredStateChange = next(() => this.set("state", "loading"));
     } else {
       this.set("state", "done");
     }
