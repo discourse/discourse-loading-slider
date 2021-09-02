@@ -6,10 +6,13 @@ import DiscourseURL from "discourse/lib/url";
 import { set } from "@ember/object";
 import { isAppWebview } from "discourse/lib/utilities";
 
+const PLUGIN_ID = 'discourse-loading-slider';
+
 export default apiInitializer("0.8", (api) => {
   delete Ember.TEMPLATES["loading"];
 
   api.modifyClass("route:application", {
+    pluginId: PLUGIN_ID,
     loadingIndicator: service(),
 
     @action
@@ -29,6 +32,8 @@ export default apiInitializer("0.8", (api) => {
   });
 
   api.modifyClass("component:scrolling-post-stream", {
+    pluginId: PLUGIN_ID,
+
     // Core currently relies on the intermediate loading screen to reload the scrolling-post-stream
     // component. This change should probably be made in core, but keeping it here for now.
     @observes("posts")
@@ -46,6 +51,8 @@ export default apiInitializer("0.8", (api) => {
   });
 
   api.modifyClass("component:topic-list-item", {
+    pluginId: PLUGIN_ID,
+
     // Core updates the header with topic information as soon as a topic-list-item is clicked
     // This feels a little weird when the body is still showing old post content, so disable
     // that behavior.
@@ -57,6 +64,8 @@ export default apiInitializer("0.8", (api) => {
   });
 
   api.modifyClass("controller:discovery", {
+    pluginId: PLUGIN_ID,
+
     set loading(value) {
       // no-op. We don't want the loading spinner to show on the discovery routes any more
     },
@@ -68,6 +77,8 @@ export default apiInitializer("0.8", (api) => {
 
   // Remove the custom refresh implementation and use the router
   api.modifyClass("controller:discovery/topics", {
+    pluginId: PLUGIN_ID,
+
     @action
     refresh() {
       this.send("triggerRefresh");
@@ -75,6 +86,8 @@ export default apiInitializer("0.8", (api) => {
   });
 
   api.modifyClass("route:discovery", {
+    pluginId: PLUGIN_ID,
+
     @action
     triggerRefresh() {
       this.refresh();
