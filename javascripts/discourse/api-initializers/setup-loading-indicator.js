@@ -4,12 +4,12 @@ import { inject as service } from "@ember/service";
 import { observes } from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
 import { set } from "@ember/object";
-import { isAppWebview } from "discourse/lib/utilities";
 
 const PLUGIN_ID = 'discourse-loading-slider';
 
 export default apiInitializer("0.8", (api) => {
   delete Ember.TEMPLATES["loading"];
+  const { isAppWebview } = api.container.lookup("capabilities:main");
 
   api.modifyClass("route:application", {
     pluginId: PLUGIN_ID,
@@ -71,7 +71,7 @@ export default apiInitializer("0.8", (api) => {
     },
   });
 
-  if (isAppWebview()) {
+  if (isAppWebview) {
     document.body.classList.add("discourse-hub-webview");
   }
 
