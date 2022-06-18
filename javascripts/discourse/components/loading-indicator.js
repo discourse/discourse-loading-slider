@@ -2,7 +2,6 @@ import Component from "@ember/component";
 import { inject as service } from "@ember/service";
 import { equal } from "@ember/object/computed";
 import { cancel, next } from "@ember/runloop";
-import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
   loadingIndicator: service(),
@@ -39,12 +38,12 @@ export default Component.extend({
     const bar = this.element.querySelector(".loading-indicator");
 
     this.element.addEventListener("transitionend", (event) => {
-      if (event.target == this.element && event.propertyName == "opacity") {
+      if (event.target === this.element && event.propertyName === "opacity") {
         this.set("state", "ready");
       } else if (
         event.target === bar &&
-        event.propertyName == "width" &&
-        this.state == "loading"
+        event.propertyName === "width" &&
+        this.state === "loading"
       ) {
         this.set("state", "still-loading");
       }
