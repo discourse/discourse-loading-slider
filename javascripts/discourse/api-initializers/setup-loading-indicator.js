@@ -3,11 +3,11 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { observes } from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
-import { set } from "@ember/object";
 
 const PLUGIN_ID = 'discourse-loading-slider';
 
 export default apiInitializer("0.8", (api) => {
+  // eslint-disable-next-line no-undef
   delete Ember.TEMPLATES["loading"];
   const { isAppWebview } = api.container.lookup("capabilities:main");
 
