@@ -4,7 +4,7 @@ import { inject as service } from "@ember/service";
 import { observes } from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
 
-const PLUGIN_ID = 'discourse-loading-slider';
+const PLUGIN_ID = "discourse-loading-slider";
 
 export default apiInitializer("0.8", (api) => {
   // eslint-disable-next-line no-undef
