@@ -7,8 +7,6 @@ import DiscourseURL from "discourse/lib/url";
 const PLUGIN_ID = "discourse-loading-slider";
 
 export default apiInitializer("0.8", (api) => {
-  // eslint-disable-next-line no-undef
-  delete Ember.TEMPLATES["loading"];
   const { isAppWebview } = api.container.lookup("capabilities:main");
 
   api.modifyClass("route:application", {
@@ -21,13 +19,7 @@ export default apiInitializer("0.8", (api) => {
       transition.promise.finally(() => {
         this.loadingIndicator.end();
       });
-
-      let superLoading = this._super();
-      if (superLoading !== null) {
-        return superLoading;
-      }
-
-      return true;
+      return false;
     },
   });
 
