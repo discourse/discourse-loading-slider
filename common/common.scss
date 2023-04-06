@@ -1,6 +1,6 @@
 .loading-indicator-container {
-  --loading-width: 80%;
-  --still-loading-width: 90%;
+  --loading-width: 0.8;
+  --still-loading-width: 0.9;
 
   --still-loading-duration: 10s;
   --done-duration: 0.4s;
@@ -22,7 +22,8 @@
   .loading-indicator {
     height: 100%;
     width: 100%;
-    width: 0%;
+    transform: scaleX(0);
+    transform-origin: left;
     background-color: var(--tertiary);
   }
 
@@ -33,18 +34,18 @@
   }
 
   &.loading .loading-indicator {
-    transition: width var(--loading-duration) ease-in;
-    width: var(--loading-width);
+    transition: transform var(--loading-duration) ease-in;
+    transform: scaleX(var(--loading-width));
   }
 
   &.still-loading .loading-indicator {
-    transition: width var(--still-loading-duration) linear;
-    width: var(--still-loading-width);
+    transition: transform var(--still-loading-duration) linear;
+    transform: scaleX(var(--still-loading-width));
   }
 
   &.done .loading-indicator {
-    transition: width var(--done-duration) ease-out;
-    width: 100%;
+    transition: transform var(--done-duration) ease-out;
+    transform: scaleX(1);
   }
 
   body.discourse-hub-webview & {
