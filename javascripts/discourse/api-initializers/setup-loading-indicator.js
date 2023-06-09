@@ -12,7 +12,7 @@ export default apiInitializer("0.8", (api) => {
   const siteSettings = api.container.lookup("service:site-settings");
 
   if (siteSettings.page_loading_indicator) {
-    // Core implementation availabile. Recommend to admin
+    // Core implementation available. Recommend to admin
     if (api.getCurrentUser()?.admin) {
       const settingsURL =
         "/admin/site_settings/category/all_results?filter=page%20loading%20indicator";
