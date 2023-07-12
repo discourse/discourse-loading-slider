@@ -4,6 +4,7 @@ import { inject as service } from "@ember/service";
 import { observes } from "discourse-common/utils/decorators";
 import DiscourseURL from "discourse/lib/url";
 import { addGlobalNotice } from "discourse/components/global-notice";
+import getURL from "discourse-common/lib/get-url";
 
 const PLUGIN_ID = "discourse-loading-slider";
 
@@ -14,12 +15,13 @@ export default apiInitializer("0.8", (api) => {
   if (siteSettings.page_loading_indicator) {
     // Core implementation available. Recommend to admin
     if (api.getCurrentUser()?.admin) {
-      const settingsURL =
-        "/admin/site_settings/category/all_results?filter=page%20loading%20indicator";
+      const settingsURL = getURL(
+        "/admin/site_settings/category/all_results?filter=page%20loading%20indicator"
+      );
       const themeId = themePrefix("foo").match(
         /theme_translations\.(\d+)\.foo/
       )[1];
-      const themeURL = `/admin/customize/themes/${themeId}`;
+      const themeURL = getURL(`/admin/customize/themes/${themeId}`);
 
       addGlobalNotice(
         `<b>Admin notice:</b> you're using the <em>discourse-loading-slider</em> theme component. The loading slider feature is now available in Discourse core. To enable the core feature, visit your <a href="${settingsURL}">site settings</a>, then <a href="${themeURL}">remove this theme component</a>.`,
